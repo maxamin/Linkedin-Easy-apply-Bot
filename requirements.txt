@@ -1,0 +1,7 @@
+PyYAML
+pdbpp
+selenium
+webdriver-manager
+linkedineasyapply
+validate_email
+pyautogui
