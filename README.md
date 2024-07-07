@@ -1,5 +1,24 @@
 
 ## README.md for `LinkedinEasyApply.py`
+# Disclaimer
+
+The LinkedIn Easy Apply Bot is For educationaly Reasons only ! . However, please read and understand the following important points before using this tool:
+
+1. **Compliance with LinkedIn Terms of Service**: 
+   - Use of this bot must comply with LinkedIn's terms of service and usage policies. Unauthorized automation or scraping can lead to account suspension or termination. Users are responsible for ensuring their actions are in accordance with LinkedIn’s policies.
+
+2. **Accuracy and Effectiveness**: 
+   - While this bot aims to streamline the job application process, there is no guarantee of accuracy, completeness, or effectiveness of applications submitted through it. Users should verify all information and ensure it is correct.
+
+3. **Data Privacy**: 
+   - The bot may require access to personal information and LinkedIn account details. Users should be aware of the risks involved in sharing such information and ensure they are using the bot in a secure environment.
+
+4. **Liability**: 
+   - The developers of this bot are not responsible for any consequences resulting from its use, including but not limited to account suspension, data breaches, or unsuccessful job applications. Users assume all risks associated with using this tool.
+
+5. **Usage at Own Risk**: 
+   - By using this bot, you acknowledge that you understand and accept these risks and disclaimers. Use this tool at your own risk.
+
 
 ### Overview
 
