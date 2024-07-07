@@ -1,4 +1,9 @@
 import yaml, pdb
+import os
+import platform
+import requests
+import zipfile
+from io import BytesIO
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
@@ -117,15 +122,75 @@ def validate_yaml():
 
     return parameters
 
+def get_latest_chromedriver_version():
+    """Fetches the latest version of ChromeDriver."""
+    url = "https://chromedriver.storage.googleapis.com/LATEST_RELEASE"
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.text.strip()
 
-if __name__ == '__main__':
+def get_system_info():
+    """Detects the system OS and architecture."""
+    system = platform.system()
+    arch = platform.machine()
+    
+    if system == "Linux":
+        system = "linux"
+        if arch in ["x86_64", "AMD64"]:
+            arch = "64"
+        elif arch in ["i386", "i686", "x86"]:
+            arch = "32"
+    elif system == "Darwin":
+        system = "mac"
+        arch = "64"
+    elif system == "Windows":
+        system = "win"
+        if arch in ["AMD64", "x86_64"]:
+            arch = "32" # ChromeDriver for Windows is 32-bit
+    else:
+        raise Exception(f"Unsupported OS: {system}")
+
+    return system, arch
+
+def download_chromedriver(version, system, arch):
+    """Downloads and extracts ChromeDriver."""
+    base_url = f"https://chromedriver.storage.googleapis.com/{version}/chromedriver_{system}{arch}.zip"
+    response = requests.get(base_url)
+    response.raise_for_status()
+    
+    with zipfile.ZipFile(BytesIO(response.content)) as zip_ref:
+        zip_ref.extractall()
+
+def check_chromedriver_present():
+    """Checks if ChromeDriver is already present and returns its version if found."""
+    try:
+        result = subprocess.run(["chromedriver", "--version"], capture_output=True, text=True, check=True)
+        version = result.stdout.split()[1]
+        return version
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        return None
+def start():
     parameters = validate_yaml()
     browser = init_browser()
-
     bot = LinkedinEasyApply(parameters, browser)
     bot.login()
     bot.security_check()
     bot.start_applying()
+if __name__ == '__main__':
+    try:
+        current_version = check_chromedriver_present()
+        if current_version:
+            print(f"ChromeDriver is already present with version {current_version}.")
+            start()
+        else:
+            version = get_latest_chromedriver_version()
+            system, arch = get_system_info()
+            download_chromedriver(version, system, arch)
+            print(f"ChromeDriver {version} downloaded and extracted successfully.")
+            start()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
 
 
 
