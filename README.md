@@ -1,5 +1,3 @@
-
-## README.md for `LinkedinEasyApply.py`
 # Disclaimer
 
 The LinkedIn Easy Apply Bot is For educationaly Reasons only ! . However, please read and understand the following important points before using this tool:
